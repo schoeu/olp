@@ -12,8 +12,8 @@ util.title = function(title) {
 const ajaxUrl = env === 'development' ?
     'http://127.0.0.1:8888' :
     env === 'production' ?
-    'https://www.url.com' :
-    'https://debug.url.com';
+    'https://www.mipengine.org/platform/mip' :
+    'https://www.mipengine.org/platform/mip';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,

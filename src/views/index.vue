@@ -63,22 +63,22 @@
             <div class="layout-content-main">
                 <Row>
                     <Col span="16" offset="4">
-                        <Form :model="formItem" :label-width="80" class="ivu-custom-form">
-                            <FormItem label="部署路径">
-                                <Input v-model="formItem.input" placeholder="/root/platform"></Input>
+                        <Form :model="formItem" :label-width="80" class="ivu-custom-form" ref="ivu-form" :rules="ruleValidate">
+                            <FormItem label="部署路径" prop="path">
+                                <Input v-model="formItem.input" placeholder="/home/work/platform"></Input>
                             </FormItem>
-                            <FormItem label="上线分支">
+                            <FormItem label="上线分支" prop="branch">
                                 <Select v-model="formItem.select">
                                     <Option value="beijing">v0.0.1</Option>
                                     <Option value="shanghai">v0.0.2</Option>
                                     <Option value="shenzhen">v0.0.3</Option>
                                 </Select>
                             </FormItem>
-                            <FormItem label="机器列表">
+                            <FormItem label="机器列表" prop="ips">
                                 <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
                             </FormItem>
                             <FormItem>
-                                <Button type="primary">开始同步</Button>
+                                <Button type="primary" @click="sync">开始同步</Button>
                                 <Button type="warning">开始上线</Button>
                                 <Button type="warning">回滚</Button>
                             </FormItem>
@@ -103,12 +103,26 @@
                     input: '',
                     select: '',
                     textarea: ''
+                },
+                ruleValidate: {
+                    path: [
+                        { required: true, message: '部署路径不能为空', trigger: 'blur',type: 'string'}
+                    ],
+                    branch: [
+                        { required: true, message: '上线tag不能为空', trigger: 'blur' },
+                        { type: 'string', message: '请填写正确的上线版本tag', trigger: 'blur' }
+                    ],
+                    ips: [
+                        { required: true, message: '请按规则填写上线机器名', trigger: 'blur',type: 'string' }
+                    ]
                 }
             }
         },
+        mounted: () => {
+        },
         methods: {
             sync: () => {
-                axios({
+                util.ajax({
                     method: 'post',
                     url: '/api/sync',
                     data: this.formItem

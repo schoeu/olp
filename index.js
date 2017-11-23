@@ -30,8 +30,11 @@ const pug = new Pug({
   })
 
 router.get('/', function (ctx, next) {
-    console.log(process.cwd());
     ctx.render("main");
+});
+
+router.post('/api/sync', function (ctx, next) {
+    console.log(ctx);
 });
 
 let port = config.port || 8910;
