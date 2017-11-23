@@ -13,10 +13,6 @@
         top: 15px;
         left: 20px;
     }
-    .layout-nav{
-        width: 420px;
-        margin: 0;
-    }
     .layout-assistant{
         width: 300px;
         margin: 0 auto;
@@ -50,16 +46,18 @@
     .ivu-custom-header span{
         font-size: 18px;
     }
+    .ivu-custom-header i{
+        font-size: 30px;
+        vertical-align: sub;
+    }
 </style>
 <template>
 <div class="layout">
-        <Menu mode="horizontal" theme="light" active-name="1">
-            <div class="layout-nav">
-                <MenuItem class="ivu-custom-header">
-                    <Icon type="ios-speedometer"></Icon>
-                    <span>MIP PlatForm</span>
+        <Menu mode="horizontal" theme="light" active-name="2">
+                <MenuItem class="ivu-custom-header"  name="1">
+                    <Icon type="android-send"></Icon>
+                    <span>{{title}}</span>
                 </MenuItem>
-            </div>
         </Menu>
         <div class="layout-content">
             <div class="layout-content-main">
@@ -67,7 +65,7 @@
                     <Col span="16" offset="4">
                         <Form :model="formItem" :label-width="80" class="ivu-custom-form">
                             <FormItem label="部署路径">
-                                <Input v-model="formItem.input" placeholder="部署路径"></Input>
+                                <Input v-model="formItem.input" placeholder="/root"></Input>
                             </FormItem>
                             <FormItem label="上线分支">
                                 <Select v-model="formItem.select">
@@ -77,10 +75,9 @@
                                 </Select>
                             </FormItem>
                             <FormItem label="机器列表">
-                                <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 10,maxRows: 15}" placeholder="部署机器列表，多机器换行隔开"></Input>
+                                <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
                             </FormItem>
                             <FormItem>
-                                <Button type="primary">Submit</Button>
                                 <Button type="primary">开始同步</Button>
                                 <Button type="warning">开始上线</Button>
                                 <Button type="warning">回滚</Button>
@@ -92,7 +89,7 @@
             </div>
         </div>
         <div class="layout-copy">
-            2017 &copy; MIP
+            2017 &copy; {{title}}}
         </div>
 </div>
 </template>
@@ -100,6 +97,8 @@
     export default {
         data () {
             return {
+                name: "",
+                title: "OLP",
                 formItem: {
                     input: '',
                     select: '',
