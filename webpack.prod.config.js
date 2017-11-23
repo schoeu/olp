@@ -36,7 +36,7 @@ module.exports = merge(webpackBaseConfig, {
             }
         }),
         new HtmlWebpackPlugin({
-            filename: '../index_prod.html',
+            filename: '../../views/main.pug',
             template: './src/template/index.ejs',
             inject: false
         })

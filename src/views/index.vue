@@ -65,7 +65,7 @@
                     <Col span="16" offset="4">
                         <Form :model="formItem" :label-width="80" class="ivu-custom-form">
                             <FormItem label="部署路径">
-                                <Input v-model="formItem.input" placeholder="/root"></Input>
+                                <Input v-model="formItem.input" placeholder="/root/platform"></Input>
                             </FormItem>
                             <FormItem label="上线分支">
                                 <Select v-model="formItem.select">
@@ -104,6 +104,20 @@
                     select: '',
                     textarea: ''
                 }
+            }
+        },
+        methods: {
+            sync: () => {
+                axios({
+                    method: 'post',
+                    url: '/api/sync',
+                    data: this.formItem
+                }).then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     };

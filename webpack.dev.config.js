@@ -27,7 +27,7 @@ module.exports = merge(webpackBaseConfig, {
             filename: 'vendors.js'
         }),
         new HtmlWebpackPlugin({
-            filename: '../index.html',
+            filename: '../views/main.pug',
             template: './src/template/index.ejs',
             inject: false
         })

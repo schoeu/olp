@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build & node ./index.js",
     "init": "webpack --progress --config webpack.dev.config.js",
     "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --history-api-fallback --config webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config webpack.prod.config.js",
@@ -16,6 +17,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^2.5.0",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.3.0",
+    "koa-static": "^4.0.2",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",
     "iview": "^2.0.0-rc.13",
