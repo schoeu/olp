@@ -1,56 +1,3 @@
-<style>
-    .layout{
-        border: 1px solid #d7dde4;
-        background: #f5f7f9;
-    }
-    .layout-logo{
-        width: 100px;
-        height: 30px;
-        background: #5b6270;
-        border-radius: 3px;
-        float: left;
-        position: relative;
-        top: 15px;
-        left: 20px;
-    }
-    .layout-assistant{
-        width: 300px;
-        margin: 0 auto;
-        height: inherit;
-    }
-    .layout-breadcrumb{
-        padding: 10px 15px 0;
-    }
-    .layout-content{
-        margin-top: 30px;
-        min-height: 200px;
-        margin: 15px;
-        overflow: hidden;
-        background: #fff;
-        border-radius: 4px;
-    }
-    .layout-content-main{
-        padding: 30px;
-    }
-    .layout-copy{
-        text-align: center;
-        padding: 10px 0 20px;
-        color: #9ea7b4;
-    }
-    .ivu-btn {
-        margin-right: 15px;
-    }
-    .layout-content .ivu-custom-form{
-        font-size: 14px!important;
-    }
-    .ivu-custom-header span{
-        font-size: 18px;
-    }
-    .ivu-custom-header i{
-        font-size: 30px;
-        vertical-align: sub;
-    }
-</style>
 <template>
 <div class="layout">
         <Menu mode="horizontal" theme="light" active-name="2">
@@ -122,7 +69,7 @@
         },
         methods: {
             sync: () => {
-                util.ajax({
+                this.$http.post({
                     method: 'post',
                     url: '/api/sync',
                     data: this.formItem
@@ -136,3 +83,56 @@
         }
     };
 </script>
+<style>
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+    }
+    .layout-logo{
+        width: 100px;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+    }
+    .layout-assistant{
+        width: 300px;
+        margin: 0 auto;
+        height: inherit;
+    }
+    .layout-breadcrumb{
+        padding: 10px 15px 0;
+    }
+    .layout-content{
+        margin-top: 30px;
+        min-height: 200px;
+        margin: 15px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 4px;
+    }
+    .layout-content-main{
+        padding: 30px;
+    }
+    .layout-copy{
+        text-align: center;
+        padding: 10px 0 20px;
+        color: #9ea7b4;
+    }
+    .ivu-btn {
+        margin-right: 15px;
+    }
+    .layout-content .ivu-custom-form{
+        font-size: 14px!important;
+    }
+    .ivu-custom-header span{
+        font-size: 18px;
+    }
+    .ivu-custom-header i{
+        font-size: 30px;
+        vertical-align: sub;
+    }
+</style>
