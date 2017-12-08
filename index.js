@@ -37,15 +37,16 @@ router.get('/', function (ctx, next) {
     ctx.render("main");
 });
 
+// 上线逻辑
 router.post('/api/sync', async function (ctx, next) {
-    ctx;
     let body = ctx.request.body || {};
     let ips = body.ips || '';
     let path = body.path || '';
-    let tags = await pushCode()
-    ctx.body = {data: tags || []};
+    let out = await pushCode(ips, path);
+    ctx.body = out.stdout.trim();
 });
 
+// 获取可上线分支
 router.get('/api/tags', async function (ctx, next) {
     let tags = await getTags()
     ctx.body = {data: tags || []};

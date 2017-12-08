@@ -71,7 +71,12 @@
         },
         methods: {
             sync: function() {
-                axios.post('/api/sync', this.formData).then(function (response) {
+                let data = {
+                    ips: this.formData.ips.trim().replace(/\s+/g, ','),
+                    path: this.formData.path.trim(),
+                    branch: this.formData.branch
+                };
+                axios.post('/api/sync', data).then(function (response) {
                     console.log(response);
                 });
             }
