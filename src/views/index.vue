@@ -10,47 +10,41 @@
             <div class="layout-content-main">
                 <Row>
                     <Col span="16" offset="4">
-                        <Form :model="formItem" :label-width="80" class="ivu-custom-form" ref="ivu-form" :rules="ruleValidate">
+                        <Form :label-width="80" class="ivu-custom-form" ref="ivu-form">
                             <FormItem label="部署路径" prop="path">
-                                <Input v-model="formItem.input" placeholder="/home/work/platform"></Input>
+                                <Input v-model="path" placeholder="/home/work/platform"></Input>
                             </FormItem>
-                            <FormItem label="上线分支" prop="branch">
-                                <Select v-model="formItem.select">
-                                    <Option value="beijing">v0.0.1</Option>
-                                    <Option value="shanghai">v0.0.2</Option>
-                                    <Option value="shenzhen">v0.0.3</Option>
+                            <FormItem label="分支选择" prop="branch">
+                                <Select v-model="branch[0]">
+                                    <Option v-for="v in branch" :value="v" :key="v">{{v}}</Option>
                                 </Select>
                             </FormItem>
                             <FormItem label="机器列表" prop="ips">
-                                <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
+                                <Input v-model="ips" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
                             </FormItem>
                             <FormItem>
-                                <Button type="primary" @click="sync">开始同步</Button>
-                                <Button type="warning">开始上线</Button>
+                                <Button type="primary" @click="sync">上线</Button>
                                 <Button type="warning">回滚</Button>
                             </FormItem>
                         </Form>
-                    
                     </Col>
                 </Row>
             </div>
         </div>
         <div class="layout-copy">
-            2017 &copy; {{title}}}
+            2017 &copy; {{title}}
         </div>
 </div>
 </template>
 <script>
     export default {
-        data () {
+        data: () => {
             return {
                 name: "",
                 title: "OLP",
-                formItem: {
-                    input: '',
-                    select: '',
-                    textarea: ''
-                },
+                path: '',
+                branch: ['请选择'],
+                ips: '',
                 ruleValidate: {
                     path: [
                         { required: true, message: '部署路径不能为空', trigger: 'blur',type: 'string'}
@@ -63,21 +57,29 @@
                         { required: true, message: '请按规则填写上线机器名', trigger: 'blur',type: 'string' }
                     ]
                 }
-            }
+                }
         },
-        mounted: () => {
+        mounted: function() {
+            // 获取tag列表
+            axios.get('/api/tags').then(data => {
+                let tagsData = data.data || {};
+                let tags = tagsData.data || [];
+                this.branch = tags;
+            });
         },
         methods: {
             sync: () => {
-                this.$http.post({
-                    method: 'post',
-                    url: '/api/sync',
-                    data: this.formItem
-                }).then(function (response) {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+                let formData = new FormData();
+                formData.append('path', this.path);
+                formData.append('branch', this.branch);
+                formData.append('ips', this.ips);
+                axios.post('/api/sync', formData, config).then(function (response) {
                     console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
                 });
             }
         }

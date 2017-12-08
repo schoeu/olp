@@ -16,7 +16,6 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-
                         less: ExtractTextPlugin.extract({
                             use: ['css-loader?minimize', 'autoprefixer-loader', 'less-loader'],
                             fallback: 'vue-style-loader'
@@ -45,7 +44,6 @@ module.exports = {
                     fallback: 'style-loader'
                 })
             },
-
             {
                 test: /\.less/,
                 use: ExtractTextPlugin.extract({

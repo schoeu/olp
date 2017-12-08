@@ -8,13 +8,16 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const Pug = require('koa-pug')
 const static = require('koa-static');
+const bodyParser = require('koa-bodyparser');
 
 const config = require('./config/app')
 const utils = require('./utils/util')
+const getTags = require('./actions/gettags');
 
 const app = new Koa();
 const router = new Router();
 app.use(static(path.join(__dirname, 'public')));
+app.use(bodyParser());
 
 let debug = false;
 if (process.env.NODE_ENV === 'development') {
@@ -33,8 +36,9 @@ router.get('/', function (ctx, next) {
     ctx.render("main");
 });
 
-router.post('/api/sync', function (ctx, next) {
-    console.log(ctx);
+router.get('/api/tags', async function (ctx, next) {
+    let tags = await getTags()
+    ctx.body = {data: tags || []};
 });
 
 let port = config.port || 8910;
