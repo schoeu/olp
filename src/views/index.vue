@@ -10,17 +10,17 @@
             <div class="layout-content-main">
                 <Row>
                     <Col span="16" offset="4">
-                        <Form :label-width="80" class="ivu-custom-form" ref="ivu-form">
-                            <FormItem label="部署路径" prop="path">
-                                <Input v-model="path" placeholder="/home/work/platform"></Input>
+                        <Form :label-width="80" class="ivu-custom-form" ref="ivu-form" enctype="application/x-www-form-urlencoded">
+                            <FormItem label="部署路径" prop="formData.path">
+                                <Input v-model="formData.path" placeholder="/home/work/platform"></Input>
                             </FormItem>
-                            <FormItem label="分支选择" prop="branch">
-                                <Select v-model="branch[0]">
-                                    <Option v-for="v in branch" :value="v" :key="v">{{v}}</Option>
+                            <FormItem label="分支选择" prop="formData.branch">
+                                <Select v-model="formData.branch[0]">
+                                    <Option v-for="v in formData.branch" :value="v" :key="v">{{v}}</Option>
                                 </Select>
                             </FormItem>
-                            <FormItem label="机器列表" prop="ips">
-                                <Input v-model="ips" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
+                            <FormItem label="机器列表" prop="formData.ips">
+                                <Input v-model="formData.ips" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="部署机器列表，多机器换行隔开"></Input>
                             </FormItem>
                             <FormItem>
                                 <Button type="primary" @click="sync">上线</Button>
@@ -42,9 +42,11 @@
             return {
                 name: "",
                 title: "OLP",
-                path: '',
-                branch: ['请选择'],
-                ips: '',
+                formData: {
+                    path: '',
+                    branch: ['请选择'],
+                    ips: '',
+                },
                 ruleValidate: {
                     path: [
                         { required: true, message: '部署路径不能为空', trigger: 'blur',type: 'string'}
@@ -68,17 +70,8 @@
             });
         },
         methods: {
-            sync: () => {
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                };
-                let formData = new FormData();
-                formData.append('path', this.path);
-                formData.append('branch', this.branch);
-                formData.append('ips', this.ips);
-                axios.post('/api/sync', formData, config).then(function (response) {
+            sync: function() {
+                axios.post('/api/sync', this.formData).then(function (response) {
                     console.log(response);
                 });
             }

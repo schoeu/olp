@@ -13,6 +13,7 @@ const bodyParser = require('koa-bodyparser');
 const config = require('./config/app')
 const utils = require('./utils/util')
 const getTags = require('./actions/gettags');
+const pushCode = require('./actions/push');
 
 const app = new Koa();
 const router = new Router();
@@ -34,6 +35,15 @@ const pug = new Pug({
 
 router.get('/', function (ctx, next) {
     ctx.render("main");
+});
+
+router.post('/api/sync', async function (ctx, next) {
+    ctx;
+    let body = ctx.request.body || {};
+    let ips = body.ips || '';
+    let path = body.path || '';
+    let tags = await pushCode()
+    ctx.body = {data: tags || []};
 });
 
 router.get('/api/tags', async function (ctx, next) {
