@@ -4,7 +4,7 @@
  * 
 */
 
-const util = require('util');
+const util = require('../utils/util');
 const path = require('path');
 const exec = util.promisify(require('child_process').exec);
 

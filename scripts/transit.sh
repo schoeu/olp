@@ -17,14 +17,14 @@ platform_name="mip-platform"
 function pushCode()
 {   
     cd ../
-    tar_name=$platform_name'_'`date '+%Y-%m-%d-%H'`'.tar'
+    tar_name=$platform_name'.'`date '+%Y-%m-%d-%H-%M'`'.tar'
     tar -czf $tar_name ./$platform_name
     echo $tar_name'打包完成.'
     echo "Host list : "${array[@]}
 
     for var in "${array[@]}"
     do
-        scp './'$tar_name $user'@'$var':'$vps_path
+        #scp './'$tar_name $user'@'$var':'$vps_path
         echo "Scp to "$var" successfully."
     done
 }

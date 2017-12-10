@@ -5,7 +5,7 @@
 */
 
 const path = require('path');
-const util = require('util');
+const util = require('../utils/util');
 const exec = util.promisify(require('child_process').exec);
 
 const commands = require('../config/commands');
