@@ -5,8 +5,8 @@
 */
 
 const path = require('path');
-const util = require('../utils/util');
-const exec = util.promisify(require('child_process').exec);
+const bluebird = require('bluebird');
+const exec = bluebird.promisify(require('child_process').exec);
 
 const commands = require('../config/commands');
 const app = require('../config/app');

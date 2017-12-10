@@ -44,7 +44,7 @@
                 title: "OLP",
                 formData: {
                     path: '',
-                    branch: ['请选择'],
+                    branch: ['最新主干'],
                     ips: '',
                 },
                 ruleValidate: {

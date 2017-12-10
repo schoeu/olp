@@ -4,6 +4,6 @@
  * 
 */
 module.exports = {
-    port: 3000,
-    gitpath: './mip-platform-test'
+    port: 9000,
+    gitpath: '../../mip-platform'
 };
